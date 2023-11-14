@@ -27,6 +27,8 @@
 |11월 10일| [Strfry](https://www.acmicpc.net/problem/11328)   | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 |11월 10일| [애너그램 만들기](https://www.acmicpc.net/problem/1919)  | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 |Optional| [공 바꾸기](https://www.acmicpc.net/problem/10813)  |  |✅ | ✅ | ✅ |  |  |
-|Optional| [나머지](https://www.acmicpc.net/problem/3052)  |  | ✅ | ✅ | ✅ |  |  |
+|Optional| [나머지](https://www.acmicpc.net/problem/3052)      |  | ✅ | ✅ | ✅ |  |  |
 |Optional| [바구니 뒤집기](https://www.acmicpc.net/problem/10811)  |  | ✅ | ✅ | ✅ |  |  |
-|Optional| [평균](https://www.acmicpc.net/problem/1546)  |  | ✅ | ✅ | ✅ |  |  |
+|Optional| [평균](https://www.acmicpc.net/problem/1546)       |  | ✅ | ✅ | ✅ |  |  |
+|11월 14일| [요세푸스 문제](https://www.acmicpc.net/problem/1158)  | ✅ | ✅ | ✅ | ✅ | ✅ |  |
+|11월 14일| [풍선 터뜨리기](https://www.acmicpc.net/problem/2346)  | ✅ |  | ✅ |  |  |  |
