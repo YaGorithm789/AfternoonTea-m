@@ -68,17 +68,16 @@ func spreadSand(_ x: Int, _ y: Int, _ d: Int) {
 
 let n = Int(readLine()!)!
 var map: [[Int]] = [[]]
-
-for _ in 0..<n {
-    let input = readLine()!.components(separatedBy: " ").map { Int($0)! }
-    map.append([0] + input)
-}
-
 var result = 0
 var x = (n + 1) / 2
 var y = (n + 1) / 2
 var dir = 1
 var moveCount = 1
+
+for _ in 0..<n {
+    let input = readLine()!.components(separatedBy: " ").map { Int($0)! }
+    map.append([0] + input)
+}
 
 while moveCount <= n {
     for _ in 0..<2 {
