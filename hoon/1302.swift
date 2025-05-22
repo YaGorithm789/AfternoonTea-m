@@ -1,23 +1,8 @@
-var sales = [String: Int]()
 let N = Int(readLine()!)!
+var nameToCnt = [String: Int]()
 
 for _ in 0..<N {
-    let book = readLine()!
-    
-    if sales.keys.contains(book) {
-        sales[book]! += 1
-    } else {
-        sales[book] = 1
-    }
+    nameToCnt[readLine()!, default: 0] += 1
 }
 
-var bestSellers = [String]()
-let bestSale = sales.values.max()!
-
-for book in sales {
-    if book.value == bestSale {
-        bestSellers.append(book.key)
-    }
-}
-
-print(bestSellers.sorted()[0])
+print(nameToCnt.sorted { $0.value != $1.value ? $0.value > $1.value : $0.key < $1.key }[0].key)
