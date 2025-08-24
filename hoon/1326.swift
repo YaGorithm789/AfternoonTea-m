@@ -1,36 +1,17 @@
 import Foundation
 
-// 빠른 입력
-final class FastScanner {
-    private var data: [UInt8] = Array(FileHandle.standardInput.readDataToEndOfFile()) + [0]
-    private var idx: Int = 0
-    
-    @inline(__always) private func skipWhitespaces() {
-        while data[idx] == 10 || data[idx] == 13 || data[idx] == 32 { idx += 1 } // \n \r space
-    }
-    @inline(__always) func readInt() -> Int {
-        skipWhitespaces()
-        var sign = 1
-        var num = 0
-        if data[idx] == 45 { sign = -1; idx += 1 } // '-'
-        while data[idx] >= 48 {
-            num = num * 10 + Int(data[idx] - 48)
-            idx += 1
-        }
-        return num * sign
-    }
-}
+// 입력
+let N = Int(readLine()!.trimmingCharacters(in: .whitespacesAndNewlines))!
+let nums = readLine()!.split(separator: " ").map { Int($0)! }
+let AB = readLine()!.split(separator: " ").map { Int($0)! }
+let a = AB[0], b = AB[1]
 
-let sc = FastScanner()
-let N = sc.readInt()
-var A = [Int](repeating: 0, count: N + 1)
-for i in 1...N { A[i] = sc.readInt() }
-let a = sc.readInt()
-let b = sc.readInt()
+// 1-index를 위해 앞에 0 하나 추가
+var A = [0] + nums
 
 // BFS
-var dist = [Int](repeating: -1, count: N + 1)
-var queue = [Int]()
+var dist = Array(repeating: -1, count: N + 1)
+var queue: [Int] = []
 var head = 0
 
 dist[a] = 0
@@ -40,26 +21,28 @@ while head < queue.count {
     let cur = queue[head]; head += 1
     let step = A[cur]
     
-    // 오른쪽으로 step 배수만큼
-    var nxt = cur + step
-    while nxt <= N {
-        if dist[nxt] == -1 {
-            dist[nxt] = dist[cur] + 1
-            if nxt == b { print(dist[nxt]); exit(0) }
-            queue.append(nxt)
+    // 오른쪽으로 이동: cur + step, cur + 2*step, ...
+    var next = cur + step
+    while next <= N {
+        if dist[next] == -1 {
+            dist[next] = dist[cur] + 1
+            if next == b { print(dist[next]); exit(0) }
+            queue.append(next)
         }
-        nxt += step
+        next += step
     }
-    // 왼쪽으로 step 배수만큼
-    nxt = cur - step
-    while nxt >= 1 {
-        if dist[nxt] == -1 {
-            dist[nxt] = dist[cur] + 1
-            if nxt == b { print(dist[nxt]); exit(0) }
-            queue.append(nxt)
+    
+    // 왼쪽으로 이동: cur - step, cur - 2*step, ...
+    next = cur - step
+    while next >= 1 {
+        if dist[next] == -1 {
+            dist[next] = dist[cur] + 1
+            if next == b { print(dist[next]); exit(0) }
+            queue.append(next)
         }
-        nxt -= step
+        next -= step
     }
 }
 
-print(dist[b]) // 도달 불가 시 -1
+// 도달 불가 시 -1
+print(dist[b])
