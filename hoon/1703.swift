@@ -1,22 +1,25 @@
 import Foundation
 
-while true {
-    guard let line = readLine() else { break }
-    
-    let inputs = line.split(separator: " ").map { Int($0)! }
-    var a = inputs[0]
-    var d = inputs[1]
-    var result = 0
+var outputs: [String] = []
 
-    if a == 0 && d == 0 {
-        break
+while let line = readLine() {
+    let tokens = line.split(separator: " ")
+    if tokens.isEmpty { continue }
+    if tokens.count == 1, tokens[0] == "0" { break }
+
+    let numbers = tokens.compactMap { Int($0) }
+    let n = numbers[0]
+    var value = 1
+    var idx = 1
+
+    for _ in 0..<n {
+        let a = numbers[idx]
+        let b = numbers[idx + 1]
+        value = value * a - b
+        idx += 2
     }
-    
-    for _ in 0..<d {
-        result += a * Int(pow(2.0, Double(d)))
-        d -= 1
-    }
-    
-    result += a
-    print(result)
+
+    outputs.append(String(value))
 }
+
+print(outputs.joined(separator: "\n"))
