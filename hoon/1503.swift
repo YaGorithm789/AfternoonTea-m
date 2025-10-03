@@ -1,30 +1,32 @@
 import Foundation
 
-let N = Int(readLine()!.trimmingCharacters(in: .whitespacesAndNewlines))!
-let M = Int(readLine()!.trimmingCharacters(in: .whitespacesAndNewlines))!
-var banned = Set<Int>()
+// --- 입력 ---
+guard let nLine = readLine(), let N = Int(nLine.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+    exit(0)
+}
+guard let mLine = readLine(), let M = Int(mLine.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+    exit(0)
+}
 
-if M > 0 {
-    if let line = readLine() {
-        for s in line.split(separator: " ") {
-            if let v = Int(s) { banned.insert(v) }
-        }
+var banned = Set<Int>()
+if M > 0, let line = readLine() {
+    for s in line.split(separator: " ") {
+        if let v = Int(s) { banned.insert(v) }
     }
 }
 
+// --- 사용 가능한 수 목록 (1...1000) ---
 var cand = [Int]()
-cand.reserveCapacity(1000 - M)
-
+cand.reserveCapacity(max(0, 1000 - M))
 for v in 1...1000 where !banned.contains(v) {
     cand.append(v)
 }
-
 if cand.isEmpty {
     print(abs(N))
     exit(0)
 }
 
-@inline(__always)
+// --- lowerBound (target 이상 첫 인덱스, Double 타겟) ---
 func lowerBound(_ arr: [Int], _ target: Double) -> Int {
     var l = 0, r = arr.count
     while l < r {
@@ -38,6 +40,7 @@ func lowerBound(_ arr: [Int], _ target: Double) -> Int {
     return l
 }
 
+// --- 두 수는 이중 루프, 마지막 한 수는 이분 탐색으로 근사 ---
 var best = Int.max
 
 for i in cand {
@@ -48,13 +51,11 @@ for i in cand {
 
         if idx < cand.count {
             let k = cand[idx]
-            let diff = abs(N - ij * k)
-            if diff < best { best = diff }
+            best = min(best, abs(N - ij * k))
         }
         if idx > 0 {
             let k = cand[idx - 1]
-            let diff = abs(N - ij * k)
-            if diff < best { best = diff }
+            best = min(best, abs(N - ij * k))
         }
 
         if best == 0 {
