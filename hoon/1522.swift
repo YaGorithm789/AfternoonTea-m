@@ -1,18 +1,32 @@
 import Foundation
 
-func solution(_ s: String) -> Int {
-    let aCount = s.filter { $0 == "a" }.count
-    if aCount == 0 { return 0 } // 'a'가 없으면 교환할 필요 없음
+let s = readLine()!
+let n = s.count
+let arr = Array(s)
+let aCount = arr.filter { $0 == "a" }.count
 
-    let doubledS = s + s // 원형 문자열 처리를 위해 두 번 붙임
-    var minBCount = aCount // 'a'의 개수만큼 초기화 (최악의 경우)
-
-    for i in 0..<s.count {
-        let endIndex = doubledS.index(doubledS.startIndex, offsetBy: i + aCount)
-        let window = String(doubledS[doubledS.index(doubledS.startIndex, offsetBy: i)..<endIndex])
-        let bCountInWindow = window.filter { $0 == "b" }.count
-        minBCount = min(minBCount, bCountInWindow)
+if aCount == 0 || aCount == n {
+    print(0)
+} else {
+    let doubled = arr + arr
+    var bInWindow = 0
+    
+    for i in 0..<aCount {
+        if doubled[i] == "b" { bInWindow += 1 }
     }
-
-    return minBCount
+    
+    var answer = bInWindow
+    
+    if n > 0 {
+        var i = 1
+        
+        while i <= n - 1 {
+            if doubled[i - 1] == "b" { bInWindow -= 1 }
+            if doubled[i + aCount - 1] == "b" { bInWindow += 1 }
+            if bInWindow < answer { answer = bInWindow }
+            i += 1
+        }
+    }
+    
+    print(answer)
 }
